@@ -5,6 +5,7 @@
 const TARGET = {tahun:2026, bulan:11, tanggal:6, jam:0, menit:0, detik:0};
 // Uji coba cepat: isi mis. 2 -> hitung mundur 2 menit dari sekarang (TARGET diabaikan). Kembalikan ke 0 saat sudah live.
 const TEST_MENIT = 2;
+const isMobile = /iPhone|iPad|Android|webOS|BlackBerry/i.test(navigator.userAgent) || innerWidth < 768;
 const _p=n=>String(n).padStart(2,'0');
 const TARGET_DATE = TEST_MENIT>0 ? new Date(Date.now()+TEST_MENIT*60000).toISOString()
   : `${TARGET.tahun}-${_p(TARGET.bulan)}-${_p(TARGET.tanggal)}T${_p(TARGET.jam)}:${_p(TARGET.menit)}:${_p(TARGET.detik)}+07:00`;
@@ -96,15 +97,16 @@ $('#back5').addEventListener('click',()=>{vid.pause();resumeMusic();goTo(4)});
 const enter={};
 // --- Transisi tahap: fade + zoom ---
 function parallaxFx(dir){
-  const W=innerWidth,H=innerHeight;
+  const W=innerWidth,H=innerHeight,duration=isMobile?.6:.9,returnDur=isMobile?1.8:2.8;
   // lapisan bintang jauh/dekat bergeser dengan kecepatan berbeda lalu menetap
-  layers.forEach(({pts,L})=>{gsap.killTweensOf(pts.position);gsap.timeline().to(pts.position,{x:-dir*(L?16:7),duration:.9,ease:'power2.in'}).to(pts.position,{x:0,duration:2.8,ease:'power3.out'})});
+  layers.forEach(({pts,L})=>{gsap.killTweensOf(pts.position);gsap.timeline().to(pts.position,{x:-dir*(L?16:7),duration:duration,ease:'power2.in'}).to(pts.position,{x:0,duration:returnDur,ease:'power3.out'})});
   // cahaya latar (3 lapisan) ikut bergeser berbeda
   [['.b1',.1,.04],['.b2',.18,.07],['.b3',.06,.1]].forEach(([s,kx,ky])=>{gsap.killTweensOf(s);
-    gsap.timeline().to(s,{'--tx':-dir*W*kx+'px','--ty':dir*H*ky+'px',duration:.9,ease:'power2.in'}).to(s,{'--tx':'0px','--ty':'0px',duration:2.8,ease:'power3.out'})});
+    gsap.timeline().to(s,{'--tx':-dir*W*kx+'px','--ty':dir*H*ky+'px',duration:duration,ease:'power2.in'}).to(s,{'--tx':'0px','--ty':'0px',duration:returnDur,ease:'power3.out'})});
   // goresan cahaya + orb di depan layar: dekat = cepat, besar, terang
-  for(let i=0;i<26;i++){
-    const orb=i>=18,dp=Math.random(),s=document.createElement('i'),w=orb?14+dp*46:60+dp*240,h=orb?w:1+dp*2.6,y0=Math.random()*H;
+  const orbCount=isMobile?12:26;
+  for(let i=0;i<orbCount;i++){
+    const orb=i>=(isMobile?9:18),dp=Math.random(),s=document.createElement('i'),w=orb?14+dp*46:60+dp*240,h=orb?w:1+dp*2.6,y0=Math.random()*H;
     s.className=orb?'orb':'streak';
     s.style.cssText=`width:${w}px;height:${h}px;opacity:${.25+dp*.6}`+(orb?'':`;background:linear-gradient(to ${dir>0?'left':'right'},transparent,${Math.random()<.65?'#E6C594':'#F2A6A6'})`);
     document.body.append(s);
@@ -116,16 +118,17 @@ function goTo(n){
   const from=$(`[data-stage="${current}"]`),to=$(`[data-stage="${n}"]`);
   if(!to||n===current||busy||(current===1&&n>1&&!unlocked))return;
   busy=true;const dir=n>current?1:-1,W=innerWidth,dep=i=>.55+(i%4)*.35,kids=el=>[...el.children].filter(c=>!c.classList.contains('petals'));
+  const duration=isMobile?.45:.9,returnDur=isMobile?.8:2.8;
   parallaxFx(dir);
-  gsap.to(C.position,{z:10-dir*3,duration:.9,ease:EC});
-  kids(from).forEach((c,i)=>gsap.to(c,{x:-dir*W*.55*dep(i),duration:.95,ease:'power2.in'}));
+  gsap.to(C.position,{z:10-dir*3,duration:duration,ease:EC});
+  kids(from).forEach((c,i)=>gsap.to(c,{x:-dir*W*.55*dep(i),duration:duration+.05,ease:'power2.in'}));
   gsap.to(from,{opacity:0,duration:.55,delay:.4,ease:'power1.in',onComplete:()=>{
     kids(from).forEach(c=>gsap.set(c,{clearProps:'x'}));
     from.classList.remove('active');gsap.set(from,{clearProps:'all'});
     to.classList.add('active');current=n;paintDots();
-    kids(to).forEach((c,i)=>gsap.fromTo(c,{x:dir*W*.55*dep(i)},{x:0,duration:1.5,ease:'power3.out',clearProps:'x'}));
-    gsap.fromTo(to,{opacity:0},{opacity:1,duration:.7,ease:'power1.out',clearProps:'opacity',onComplete:()=>busy=false});
-    gsap.to(C.position,{z:10,duration:1.5,ease:EC});
+    kids(to).forEach((c,i)=>gsap.fromTo(c,{x:dir*W*.55*dep(i)},{x:0,duration:isMobile?.8:1.5,ease:'power3.out',clearProps:'x'}));
+    gsap.fromTo(to,{opacity:0},{opacity:1,duration:isMobile?.4:.7,ease:'power1.out',clearProps:'opacity',onComplete:()=>busy=false});
+    gsap.to(C.position,{z:10,duration:isMobile?.8:1.5,ease:EC});
     if(enter[n])enter[n]();
   }});
 }
@@ -141,7 +144,7 @@ const tc=document.createElement('canvas');tc.width=tc.height=64;const x=tc.getCo
 gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.3,'rgba(255,255,255,.45)');gr.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=gr;x.fillRect(0,0,64,64);
 const tex=new THREE.CanvasTexture(tc),cols=[new THREE.Color('#E6C594'),new THREE.Color('#F2A6A6'),new THREE.Color('#ffffff')],layers=[];
 for(let L=0;L<2;L++){
-  const N=320,p=new Float32Array(N*3),c=new Float32Array(N*3);
+  const N=isMobile?120:320,p=new Float32Array(N*3),c=new Float32Array(N*3);
   for(let k=0;k<N;k++){p.set([(Math.random()-.5)*48,(Math.random()-.5)*28,(Math.random()-.5)*30],k*3);const q=cols[Math.floor(Math.random()*3)];c.set([q.r,q.g,q.b],k*3)}
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('color',new THREE.BufferAttribute(c,3));
   const m=new THREE.PointsMaterial({size:L?.34:.2,map:tex,vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
@@ -546,7 +549,7 @@ const fpts=new THREE.Points(fg,fmat);fpts.frustumCulled=false;S.add(fpts);
 let fi=0,fT;
 function burst(){
   const ar=innerWidth/innerHeight,cx=(Math.random()-.5)*2*Math.min(9,5.5*ar),cy=.5+Math.random()*4.5,cz=-4+Math.random()*4,pal=[[1,.78,.45],[1,.93,.75],[.95,.65,.65]][Math.random()*3|0];
-  for(let k=0;k<90;k++){const i=(fi++%FN)*3,a=Math.random()*6.283,b=Math.acos(2*Math.random()-1),sp=2+Math.random()*2.6;
+  for(let k=0;k<(isMobile?30:90);k++){const i=(fi++%FN)*3,a=Math.random()*6.283,b=Math.acos(2*Math.random()-1),sp=2+Math.random()*2.6;
     fp.set([cx,cy,cz],i);fv.set([Math.sin(b)*Math.cos(a)*sp,Math.sin(b)*Math.sin(a)*sp,Math.cos(b)*sp],i);fc.set(pal,i);fl[i/3]=1}fg.attributes.aC.needsUpdate=true;
 }
 (function fw(){
