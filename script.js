@@ -4,7 +4,7 @@
 // Kalau tanggal sudah lewat, semua angka jadi 00 dan tombol langsung terbuka (itu sebabnya terlihat "tidak bergerak").
 const TARGET = {tahun:2026, bulan:11, tanggal:6, jam:0, menit:0, detik:0};
 // Uji coba cepat: isi mis. 2 -> hitung mundur 2 menit dari sekarang (TARGET diabaikan). Kembalikan ke 0 saat sudah live.
-const TEST_MENIT = 2;
+const TEST_MENIT = 0;
 const _p=n=>String(n).padStart(2,'0');
 const TARGET_DATE = TEST_MENIT>0 ? new Date(Date.now()+TEST_MENIT*60000).toISOString()
   : `${TARGET.tahun}-${_p(TARGET.bulan)}-${_p(TARGET.tanggal)}T${_p(TARGET.jam)}:${_p(TARGET.menit)}:${_p(TARGET.detik)}+07:00`;
