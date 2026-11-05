@@ -240,6 +240,7 @@ nav.glass{position:fixed;z-index:30;left:12px;right:12px;top:calc(env(safe-area-
 .pctl button{width:42px;height:42px;display:grid;place-items:center;background:none;border:0;color:#fff;cursor:pointer;border-radius:50%;transition:transform .2s,background .3s}
 .pctl button:hover{background:rgba(255,255,255,.1)}.pctl button:active{transform:scale(.9)}
 .pctl svg{width:26px;height:26px;fill:currentColor}.pctl .pplay svg{width:32px;height:32px}
+.pbar{margin:8px 12px 6px;padding:8px 0}
 .pvol{display:flex;align-items:center;gap:8px;margin-top:4px;opacity:.8}
 .pvol svg{width:15px;height:15px;fill:currentColor;flex:none}
 .pcard input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:none;cursor:pointer;margin:0;--p:0%}
