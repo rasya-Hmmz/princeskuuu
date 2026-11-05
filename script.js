@@ -18,7 +18,7 @@ const MSG6 = "Makasih banyak ya ayy udah ada di hidup aku dan selalu ngisi hari-
 const MSG7 = "Makasih ya ayy udah selalu jadi alasan di balik senyumku selama ini. Tumbuhlah jadi wanita yang makin cantik dan penuh warna, se-pigmented warna blush on di pipi kamu yang lucu itu, sayang. Semoga setiap harimu selalu dipenuhi cinta, tawa, dan semua hal indah yang emang udah sepantasnya kamu dapetin."; // Tahap 7
 const GALLERY = [                 // Tahap 4: src = foto (kosong = placeholder), cap = judul, desc = deskripsi saat diklik
   {src:"terserah.jpg",cap:"Awal cerita kita",desc:"Di sinilah semuanya dimulai. Awalnya biasa saja, tapi ternyata jadi awal dari cerita yang paling kusuka."},
-  {src:"malam.png",cap:"Malam yang indah",desc:"Malam yang sunyi, tanpa rencana apa-apa, dan entah kenapa terasa paling berbeda, dimana kita memulai saling mengenal lebih jauh."},
+  {src:"malam.PNG",cap:"Malam yang indah",desc:"Malam yang sunyi, tanpa rencana apa-apa, dan entah kenapa terasa paling berbeda, dimana kita memulai saling mengenal lebih jauh."},
   {src:"kamu_cantik.jpg",cap:"Foto favorit",desc:"Foto yang selalu jadi penyemangat aku, foto yang selalu menunggu aku jauh disana untuk mengejar mimpiku, janjiku, dan keseriusanku."},
   {src:"project.jpeg",cap:"Buatan pertama aku dan aku kasi ke kamu",desc:"Project pertama aku yang aku usahain bisa kekirim untuk kamu, dan itu jembatan awal aku bisa sejauh ini, kamu juga alasan aku untuk selalu belajar dan ngembangin skil aku sayang💞."},
   {src:"aku_dan_kamu.jpeg",cap:"Foto yang terlihat dekat",desc:"Foto ini keliatan dekat walaupun terhalang jarak sayang, tapi aku bakalan robohin jarak ini dan foto secara langsung bersama kamu ayy, oiya aku minta maaff edit foto kamu tanpa seizin kamu dulu ayy T_T."},
@@ -27,7 +27,7 @@ const GALLERY = [                 // Tahap 4: src = foto (kosong = placeholder),
   {src:"hari_1.jpeg",cap:"Hari pertama kita",desc:"Hari pertama kita call sayang, dan waktu itu kita masi sekua diem dieman, saling memanggil satu sama lain dengan alasan `tes telinga ayy`, malam yang singkat tetapi terasa sangat istimewa hanya karena ada kamu."},
   {src:"happy.jpg",cap:"Sampai hari ini",desc:"Sampai hari ini sayanggg 06-11-2026, hari dimana kamu bertambah usia, dan tanggal kamu dilahirkan. Sayang semoga kita terus bersama selamanya ayy, dan semoga sampai hari-hari panjang berikutnya, dari perempuanku menjadi wanitaku<3."}
 ];
-const PHOTOS = ["kamu_cantik.jpg","iandu.png","jabrik.jpg","jabrik.jpg","iandu.png","kamu_cantik.jpg"]; // foto melayang Tahap 3 (data URI / URL file saat di-hosting; kosong = placeholder)
+const PHOTOS = ["kamu_cantik.jpg","iandu.PNG","jabrik.jpg","jabrik.jpg","iandu.PNG","kamu_cantik.jpg"]; // foto melayang Tahap 3 (data URI / URL file saat di-hosting; kosong = placeholder)
 // ======================================
 const $=s=>document.querySelector(s),TZ={timeZone:'Asia/Jakarta'},EC='power3.inOut';
 let offset=0,synced=false,unlocked=false,gateInit=false,current=1,busy=false;
