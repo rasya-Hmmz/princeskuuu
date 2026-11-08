@@ -166,7 +166,7 @@ let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e
 const TRACKS=[
  {t:'Kamu Cantik Kamu Baik',m:'Lyla',src:'kamu_cantik.m4a',img:'kamu_baik.png'},
  {t:'Shape Of My Heart',m:'Backstreet Boys',src:'lagu5.m4a',img:'lagu5.png'},
- {t:'You And Beautiful',m:'Lana Del Rey',src:'you.m4a',img:'kamu_cantik.jpg'},
+ {t:'Young And Beautiful',m:'Lana Del Rey',src:'you.m4a',img:'kamu_cantik.jpg'},
  {t:'Aku Milikmu',m:'Dewa 19',src:'aku-milikmu.m4a',img:'aku-milikmu.jpg'},
  {t:'Salvatore',m:'Lana Del Rey',src:'salvatore.m4a',img:'flower.jpeg'},
  {t:'Penjaga Hati',m:'Nadhif Basalamah',src:'penjaga_hati.m4a',img:'penjaga_hati.jpg'}
